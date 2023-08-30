@@ -1,11 +1,9 @@
 import sqlite3
 
 def create_tables():
-    # Connect to or create the database
     conn = sqlite3.connect("hotel_systems.db")
     cursor = conn.cursor()
 
-    # List of tables and their CREATE TABLE statements
     tables = [
         ("guest",
          """
@@ -93,12 +91,10 @@ def create_tables():
         )
     ]
 
-    # Create tables if they don't exist
     for table_name, create_statement in tables:
         cursor.execute(create_statement)
         print(f"{table_name} table created.")
 
-    # Commit the changes and close the connection
     conn.commit()
     conn.close()
 
