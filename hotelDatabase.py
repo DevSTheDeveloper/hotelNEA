@@ -8,7 +8,7 @@ def create_tables():
         ("guest",
          """
          CREATE TABLE IF NOT EXISTS guest (
-             guestID INTEGER PRIMARY KEY,
+             guestID TEXT PRIMARY KEY,
              first_name TEXT,
              last_name TEXT,
              email TEXT,
