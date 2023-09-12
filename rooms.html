@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-color: #FFFFFF;
+            text-align: left;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #header {
+            color: #ffffff;
+            text-align: left;
+            padding: 5px;
+            width: 100%;
+            height: 24.4px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        #header a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 18px;
+            margin-top: 10px ;
+        }
+
+        .room-list {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .room-dropdown {
+            width: 200px;
+            font-size: 18px;
+            padding: 10px;
+        }
+
+        #selected-room {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        #room-type {
+            font-size: 17px;
+            color: gray;
+            margin-top: 5px;
+        }
+
+        #guest-info {
+            font-size: 14px;
+            color: gray;
+            margin-top: 5px;
+        }
+
+        .return-button {
+            width: 90px;
+            height: 20px;
+            padding: 5px;
+            padding-left: 17px;
+            background-color: rgb(95, 159, 255);
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .availability-light {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-left: 10px;
+            margin-right: 10px;
+            background-color: rgb(255, 255, 255); /* Default color is set to white, which is the same as the background (No need to disable the light) */
+        }
+
+        /* Added default style for the dropdown */
+        .room-dropdown option[value="default"] {
+            display: none;
+        }
+
+        /* Added style for room features */
+        #room-features {
+            font-size: 18px;
+            margin-top: 10px;
+            border-top: 1px solid #ccc; /* Add a top border to separate sections */
+            padding-top: 10px; /* Add some spacing above the border */
+        }
+
+        #room-status-label {
+            font-size: 18px;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        #room-status {
+            font-size: 18px;
+            padding: 10px;
+            margin-left: 10pxpx;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <a href="#" class="return-button">RETURN</a>
+    </div>
+    <h1>Room Management</h1>
+    <div class="room-list">
+        <select class="room-dropdown" id="room-dropdown">
+            <option value="default" disabled selected>SELECT ROOM</option>
+            <option value="203">203</option>
+            <option value="205">205</option>
+            <option value="305">305</option>
+            <option value="209">209</option>
+        </select>
+        <span class="availability-light"></span> <!-- Move the light here -->
+        <label for="room-status">Room Status:</label>
+        <select class="room-dropdown" id="room-status">
+            <option value="Set Status">SET STATUS</option>
+            <option value="Occupied">Occupied</option>
+            <option value="Available">Available</option>
+            <option value="Maintenance Req">Maintenance Req</option>
+            <option value="Cleaning">Cleaning</option>
+            <option value="Cleaning Req">Cleaning Req</option>
+            <option value="Out of Order">Out of Order</option>
+            <option value="Maintaining">Maintaining</option>
+        </select>
+    </div>
+
+    <div id="selected-room">Room Selected: 305</div>
+    <div id="room-type">Room Type: Standard</div>
+    <div id="guest-info">
+        <span>Guest: John Doe</span>
+        <span>(ID: 12345)</span>
+    </div>
+
+    <!-- Room Features Section (Sample data, you need server-side scripting for database retrieval) -->
+    <div id="room-features">
+        <strong>Room Features/Details:</strong><br>
+        <ul>
+            <li>Floor:</li>
+            <li>Feature 2: Another Sample Feature</li>
+            <!-- You would populate this list dynamically with data from your database -->
+        </ul>
+    </div>
+
+    <script>
+        const roomDropdown = document.getElementById('room-dropdown');
+        const selectedRoom = document.getElementById('selected-room');
+        const availabilityLight = document.querySelector('.availability-light');
+        const roomFeatures = document.getElementById('room-features');
+        const floorNumber = document.querySelector('#room-features ul li:first-child'); // Select the first <li> element
+    
+        roomDropdown.addEventListener('change', () => {
+            const selectedValue = roomDropdown.value;
+            selectedRoom.textContent = `Room Selected: ${selectedValue}`; //Saves space in the DB by locally finding a substring to get the floor number
+            
+            // Extract the first character as the floor number
+            const floor = selectedValue.charAt(0);
+            floorNumber.textContent = `Floor: ${floor}`;
+    
+            // Toggle the availability light based on the selected room
+            if (selectedValue === 'default') {
+                availabilityLight.style.backgroundColor = 'white'; // Set it to white
+            } else {
+                availabilityLight.style.backgroundColor = 'green';
+            }
+    
+            // Here you would make an AJAX request to your server to retrieve room features
+            // and then populate the roomFeatures div with the retrieved data.
+            // This requires server-side scripting like Django or Express.js.
+        });
+    </script>
+    
+</body>
+</html>
